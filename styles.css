@@ -1,0 +1,7 @@
+/* #content {
+    display:grid;
+    grid-template-columns: repeat(3,300px);
+    gap:40px;
+    padding:50px;
+    border:1px solid grey;
+} */
