@@ -17,7 +17,7 @@
       img.style.margin = "10px"; 
 
       // Create a paragraph for the title (optional)
-      const title = document.createElement("h1");
+      const title = document.createElement("h4");
       title.textContent = `Title: ${data.title}`;
 
       const id = document.createElement("p");
@@ -36,8 +36,8 @@
       rating.textContent = `Rating: ${data.rating.rate} (from ${data.rating.count} reviews)`;
 
 
-      const description = document.createElement("p");
-      description.textContent = `Description: ${data.description}`;
+      // const description = document.createElement("p");
+      // description.textContent = `Description: ${data.description}`;
 
 
 
