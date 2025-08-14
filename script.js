@@ -4,15 +4,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('content');
   let products = [];
 
-  // Fetch product list
+  // Menu toggle
+  const MenuItems = document.getElementById("MenuItems");
+  MenuItems.style.maxHeight = "0px";
+  window.menutoggle = function () {
+    MenuItems.style.maxHeight = MenuItems.style.maxHeight === "0px" ? "200px" : "0px";
+  }
+
+  // Fetch products
   fetch('https://fakestoreapi.com/products')
     .then(res => res.json())
     .then(json => {
       products = json;
       renderProducts(products);
     })
-    .catch(err => {
-      console.error('Fetch error:', err);
+    .catch(() => {
       container.innerHTML = '<p class="error-message">Failed to load products. Please try again later.</p>';
     });
 
@@ -26,8 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const card = document.createElement('div');
       card.classList.add('product-card');
       card.innerHTML = `
-        <img src="${p.image}" alt="${p.title}"
-             onerror="this.onerror=null;this.src='fallback-image.jpg'; this.alt='Image not available';">
+        <img src="${p.image}" alt="${p.title}" onerror="this.src='https://via.placeholder.com/150'">
         <h4>${p.title}</h4>
         <p>Category: ${p.category}</p>
         <h5>Price: $${p.price}</h5>
@@ -37,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Search input listener
   inputBox.addEventListener('input', () => {
     const query = inputBox.value.toLowerCase().trim();
     if (!query) {
@@ -44,26 +50,18 @@ document.addEventListener('DOMContentLoaded', () => {
       renderProducts(products);
       return;
     }
-
     const filtered = products.filter(p =>
       p.title.toLowerCase().includes(query) ||
       p.category.toLowerCase().includes(query)
     );
-
-    if (filtered.length) {
-      displaySuggestions(filtered);
-    } else {
-      resultBox.style.display = 'none';
-      container.innerHTML = '<p class="error-message">No matching products.</p>';
-    }
+    filtered.length ? displaySuggestions(filtered) : noResults();
   });
 
   function displaySuggestions(list) {
     const ul = document.createElement('ul');
     list.forEach(p => {
       const li = document.createElement('li');
-      li.innerHTML = `<img src="${p.image}" alt="${p.title}" width="40" style="vertical-align:middle; margin-right:8px;"
-                      onerror="this.onerror=null;this.src='fallback-image.jpg'; this.alt='';"> ${p.title}`;
+      li.innerHTML = `<img src="${p.image}" alt="${p.title}" width="40" style="vertical-align:middle; margin-right:8px;"> ${p.title}`;
       li.addEventListener('click', () => {
         inputBox.value = p.title;
         resultBox.style.display = 'none';
@@ -75,4 +73,16 @@ document.addEventListener('DOMContentLoaded', () => {
     resultBox.appendChild(ul);
     resultBox.style.display = 'block';
   }
+
+  function noResults() {
+    resultBox.style.display = 'none';
+    container.innerHTML = '<p class="error-message">No matching products.</p>';
+  }
+
+  // Close suggestions on outside click
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.search-box')) {
+      resultBox.style.display = 'none';
+    }
+  });
 });
