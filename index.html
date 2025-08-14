@@ -3,18 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Store</title>
+  <title>Product Store with Search</title>
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome for search icon -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Header Section -->
+
   <div class="header">
     <div class="container">
       <div class="navbar">
-         <img src="images/logo.png" width="125px">
+        <div class="logo">
+           <img src="images/logo.png" width="125px">
         </div>
-          <nav>
+
+         <nav>
             <ul id="MenuItems">
                 <li><a href="">Home</a></li>
                 <li><a href="">Products</a></li>
@@ -22,26 +30,100 @@
                 <li><a href="">Contact</a></li>
                 <li><a href="">Account</a></li>
             </ul>
+
+    <div class="search-box">
+      <input type="text" id="input-box" placeholder="Search products..." autocomplete="off">
+      <button><i class="fa-solid fa-magnifying-glass"></i></button>
+      <div class="result-box"></div>
+    </div>
+       
         </nav>
+        <img src="images/cart.png" width="30px" height="30px">
+        <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
+        </div>
+         
        
       </div>
+
       <div class="row">
         <div class="col-2">
-          <h1>Give Your Workout<br> A New Style!</h1>
+          <h1>We Sell the Best <br>Products<br> Well Trusted!</h1>
             <p>Success isn't always about greatness. it's about consistency. Consistent<br> hard work gains success. Greatness
             will come.</p>
           <a href="#content" class="btn">Explore Now &#8594;</a>
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- Product Grid Section -->
+      
+      
   <div class="container">
     <div id="content" class="product-container">
-      <!-- Products will be inserted here by JavaScript -->
+      <!-- Product cards will be injected here -->
+       
     </div>
   </div>
+
+<!-----footer------>
+<div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="footer-col-1">
+        <h3>Download Our App</h3>
+        <p>Download App for Android and ios mobile phone.</p>
+        <div class="app-logo">
+          <img src="images/play-store.png">
+          <img src="images/app-store.png">
+        </div>
+      </div>
+
+      <div class="footer-col-2">
+        <img src="images/logo-white.png">
+        <p>Our Purpose Is To Sustainably Make the Pleasure and<br> Benefits of Products Accessible to you</p>
+      </div>
+
+      <div class="footer-col-3">
+        <h3>Useful Links</h3>
+        <ul>
+          <li>Coupons</li>
+          <li>Blog Post</li>
+          <li>Return Policy</li>
+          <li>Join Afiliate</li>
+        </ul>
+      </div>
+
+      <div class="footer-col-4">
+        <h3>Follow us</h3>
+        <ul>
+          <li>Facebook</li>
+          <li>Twitter</li>
+          <li>Instagram</li>
+          <li>YouTube</li>
+        </ul>
+      </div>
+    </div>
+    <hr>
+    <p class="copyright">Copyright 2025 - All Rights Reserved Used to Permission.</p>
+  </div>
+</div>
+<!--Js for toggle menu-->
+<script>
+  var MenuItems = document.getElementById("MenuItems");
+
+  MenuItems.style.maxHeight = "0px";
+
+  function menutoggle() {
+    if(MenuItems.style.maxHeight == "0px") {
+      MenuItems.style.maxHeight = "200px"
+    } 
+    else {
+      MenuItems.style.maxHeight = "0px";
+    }
+  }
+</script>
+
+
+
+  
 
   <script src="script.js"></script>
 </body>

@@ -1,90 +1,78 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Toggle mobile menu
-  const menuIcon = document.querySelector('.menu-icon');
-  const navUl = document.querySelector('#menu-items');
-
-  if (menuIcon && navUl) {
-    menuIcon.addEventListener('click', () => {
-      navUl.classList.toggle('open');
-    });
-  }
-
-  // Show loading state
+  const inputBox = document.getElementById('input-box');
+  const resultBox = document.querySelector('.result-box');
   const container = document.getElementById('content');
-  if (!container) {
-    console.error('Container element with ID "content" not found');
-    return;
-  }
-  container.innerHTML = '<p>Loading products...</p>';
+  let products = [];
 
-  // Fetch products
+  // Fetch product list
   fetch('https://fakestoreapi.com/products')
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
+    .then(res => res.json())
+    .then(json => {
+      products = json;
+      renderProducts(products);
     })
-    .then((json) => {
-      container.innerHTML = ''; // Clear loading state
-      json.forEach((data) => {
-        // Create product card
-        const productCard = document.createElement('div');
-        productCard.classList.add('product-card');
-
-        // Image
-        const img = document.createElement('img');
-        img.src = data.image;
-        img.alt = data.title;
-        img.onerror = () => {
-          img.src = 'fallback-image.jpg';
-          img.alt = 'Image not available';
-        };
-
-        // Title
-        const title = document.createElement('h4');
-        title.textContent = data.title;
-
-        // ID
-        const id = document.createElement('p');
-        id.textContent = `ID: ${data.id}`;
-
-        // Category
-        const category = document.createElement('p');
-        category.textContent = `Category: ${data.category}`;
-
-        // Price
-        const price = document.createElement('h5');
-        price.textContent = `Price: $${data.price}`;
-
-        // Rating
-        const rating = document.createElement('span');
-        rating.textContent = data.rating
-          ? `Rating: ${data.rating.rate}/5 (${data.rating.count} reviews)`
-          : 'Rating: Not available';
-
-        // Description
-        const description = document.createElement('p');
-        description.classList.add('description');
-        description.textContent = data.description.length > 100
-          ? `${data.description.slice(0, 100)}...`
-          : data.description;
-
-        // Append elements to product card
-        productCard.appendChild(img);
-        productCard.appendChild(title);
-        productCard.appendChild(id);
-        productCard.appendChild(category);
-        productCard.appendChild(price);
-        productCard.appendChild(rating);
-        productCard.appendChild(description);
-
-        // Append product card to container
-        container.appendChild(productCard);
-      });
-    })
-    .catch((error) => {
-      console.error('Error fetching data:', error);
+    .catch(err => {
+      console.error('Fetch error:', err);
       container.innerHTML = '<p class="error-message">Failed to load products. Please try again later.</p>';
     });
+
+  function renderProducts(list) {
+    container.innerHTML = '';
+    if (list.length === 0) {
+      container.innerHTML = '<p class="error-message">No products found.</p>';
+      return;
+    }
+    list.forEach(p => {
+      const card = document.createElement('div');
+      card.classList.add('product-card');
+      card.innerHTML = `
+        <img src="${p.image}" alt="${p.title}"
+             onerror="this.onerror=null;this.src='fallback-image.jpg'; this.alt='Image not available';">
+        <h4>${p.title}</h4>
+        <p>Category: ${p.category}</p>
+        <h5>Price: $${p.price}</h5>
+        <span>${p.rating ? `Rating: ${p.rating.rate}/5 (${p.rating.count})` : 'No Rating'}</span>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  inputBox.addEventListener('input', () => {
+    const query = inputBox.value.toLowerCase().trim();
+    if (!query) {
+      resultBox.style.display = 'none';
+      renderProducts(products);
+      return;
+    }
+
+    const filtered = products.filter(p =>
+      p.title.toLowerCase().includes(query) ||
+      p.category.toLowerCase().includes(query)
+    );
+
+    if (filtered.length) {
+      displaySuggestions(filtered);
+    } else {
+      resultBox.style.display = 'none';
+      container.innerHTML = '<p class="error-message">No matching products.</p>';
+    }
+  });
+
+  function displaySuggestions(list) {
+    const ul = document.createElement('ul');
+    list.forEach(p => {
+      const li = document.createElement('li');
+      li.innerHTML = `<img src="${p.image}" alt="${p.title}" width="40" style="vertical-align:middle; margin-right:8px;"
+                      onerror="this.onerror=null;this.src='fallback-image.jpg'; this.alt='';"> ${p.title}`;
+      li.addEventListener('click', () => {
+        inputBox.value = p.title;
+        resultBox.style.display = 'none';
+        renderProducts([p]);
+      });
+      ul.appendChild(li);
+    });
+    resultBox.innerHTML = '';
+    resultBox.appendChild(ul);
+    resultBox.style.display = 'block';
+  }
 });
