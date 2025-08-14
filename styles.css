@@ -263,8 +263,10 @@ ul{
 
   nav ul li {
     display: block;
-    margin: 30px;
+    margin: 20px;
     margin-right:5px;
+    font-size: 12px;
+    font-weight: bold;
   }
 
   nav ul li a {
