@@ -87,9 +87,9 @@ p {
 
 /* Search Box */
 .search-box {
-  position: relative;
+  position: static;
   margin: 20px auto;
-  max-width: 400px;
+  max-width: 300px;
   display: flex;
   align-items: center;
 }
@@ -265,7 +265,7 @@ ul{
     display: block;
     margin: 20px;
     margin-right:5px;
-    font-size: 8px;
+    font-size: 15px;
     font-weight: bold;
   }
 
@@ -276,22 +276,5 @@ ul{
   .menu-icon {
     display: block;
     cursor: pointer;
-  }
-}
-/* media query for mobile */
-@media screen and (max-width: 375px) {
-  .search-box {
-    max-width: 250px;
-    margin: 15px auto;
-  }
-
-  .result-box {
-    max-width: 250px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .logo img {
-    width: 80px;
   }
 }
