@@ -112,10 +112,6 @@ p {
   cursor: pointer;
 }
 
-.search-box button i {
-  color: #555;
-  font-size: 18px;
-}
 
 .result-box {
   position: absolute;
