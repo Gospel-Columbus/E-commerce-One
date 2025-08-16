@@ -87,7 +87,7 @@ p {
 
 /* Search Box */
 .search-box {
-  position: static;
+  position: relative;
   margin: 20px auto;
   max-width: 300px;
   display: flex;
@@ -265,7 +265,7 @@ ul{
     display: block;
     margin: 20px;
     margin-right:5px;
-    font-size: 15px;
+    font-size: 12px;
     font-weight: bold;
   }
 
@@ -276,5 +276,21 @@ ul{
   .menu-icon {
     display: block;
     cursor: pointer;
+  }
+
+
+  .search-box{
+    max-width:200px;
+    margin:15px auto;
+  }
+
+  .result-box{
+    max-width:200px;
+    left:50%;
+    transform: translateX(-50%);
+  }
+
+  .logo img{
+    width:80px;
   }
 }
