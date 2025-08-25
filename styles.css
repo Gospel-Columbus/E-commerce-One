@@ -94,6 +94,9 @@ p {
   height: 12px;
   font-size: 15px;
   padding:3px;
+  position:relative;
+  bottom:15px;
+  right:10px;
  
 }
 
