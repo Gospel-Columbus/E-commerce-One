@@ -85,6 +85,18 @@ p {
   margin-top: 70px;
 }
 
+/* Cart Count*/
+.cart-count {
+  background: #ff523b;
+  color: #fff;
+  border-radius: 50%;
+  width: 18px;
+  height: 12px;
+  font-size: 15px;
+  padding:5px;
+ 
+}
+
 /* Search Box */
 .search-box {
   position: relative;
