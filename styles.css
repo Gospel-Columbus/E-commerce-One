@@ -94,13 +94,13 @@ p {
   background: #ff523b;
   color: #fff;
   border-radius: 50%;
-  width: 18px;
-  height: 12px;
   font-size: 15px;
-  padding:3px;
+  padding:6px;
   position:relative;
-  bottom:15px;
-  right:10px;
+  bottom:40px;
+  left:20px;
+  display:flex;
+  justify-content: center;
  
 }
 
